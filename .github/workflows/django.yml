@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: actions/checkout@v4
+    - uses: actions/checkout@v4
     - name: 🏗 set up environment
       uses: astral-sh/setup-uv@v5
 
