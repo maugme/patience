@@ -23,7 +23,7 @@ jobs:
       
     - name: 📦 install dependencies
       run: |
-        uv sync --locked --group dev
+        uv sync --group dev
         
     - name: 🦅 run unit tests
       run: |
