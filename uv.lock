@@ -91,6 +91,12 @@ dependencies = [
     { name = "ruff" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "pre-commit" },
+    { name = "ruff" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "django", specifier = ">=5.2.1" },
@@ -98,6 +104,12 @@ requires-dist = [
     { name = "pre-commit", specifier = ">=4.2.0" },
     { name = "psycopg", extras = ["binary"], specifier = ">=3.2.7" },
     { name = "ruff", specifier = ">=0.11.8" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "pre-commit" },
+    { name = "ruff" },
 ]
 
 [[package]]
