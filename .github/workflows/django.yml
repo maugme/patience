@@ -1,0 +1,34 @@
+name: 🥼 patience ci 🩺
+
+on:
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: actions/checkout@v4
+    - name: 🏗 set up environment
+      uses: astral-sh/setup-uv@v5
+
+    - name: 🐍 set up python
+      uses: actions/setup-python@v5
+      with:
+        python-version-file: ".python-version"
+      
+    - name: 📦 install dependencies
+      run: |
+        uv sync --locked --group --dev
+        
+    - name: 🦅 run unit tests
+      run: |
+        uv run manage.py test tests --tag=unit_test
+
+    - name: 🦥 run integration tests
+      run: |
+        uv run manage.py test tests --tag=integration_test
