@@ -11,3 +11,6 @@ dependencies = [
     "psycopg[binary]>=3.2.7",
     "ruff>=0.11.8",
 ]
+
+[dependency-groups]
+dev = ["ruff", "pre-commit"]
