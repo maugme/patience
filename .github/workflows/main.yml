@@ -33,9 +33,6 @@ jobs:
       - name: 🔑 set up environment variable
         run: |
           echo -e "SECRET_KEY=${{ secrets.SECRET_KEY }}\nDEBUG=${{ secrets.DEBUG }}\nDATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
-          cat -e .env  # test
-          echo
-          ls * .*
 
       - name: 🐍 set up python
         uses: actions/setup-python@v5
