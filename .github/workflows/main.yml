@@ -1,0 +1,52 @@
+name: 🥼 patience ci 🩺
+
+on:
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: 🏗 set up uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: 🔑 set up environment variable
+        run: |
+          echo -e "SECRET_KEY=${{ secrets.SECRET_KEY }}\nDEBUG=${{ secrets.DEBUG }}\nDATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+
+      - name: 🐍 set up python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+
+      - name: 📦 install dependencies
+        run: |
+          uv sync --group dev
+
+      - name: 🦅 run unit tests
+        run: |
+          uv run manage.py test tests --tag=unit_test
+
+      - name: 🦥 run integration tests
+        run: |
+          uv run manage.py test tests --tag=integration_test

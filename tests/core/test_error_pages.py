@@ -1,7 +1,7 @@
 from django.contrib.admindocs.views import ViewDetailView
 from django.core.exceptions import PermissionDenied, SuspiciousOperation, ImproperlyConfigured
 from django.http import Http404
-from django.test import TestCase, Client, override_settings
+from django.test import TestCase, Client, override_settings, tag
 from django.urls import path
 from django.views import defaults
 
@@ -24,7 +24,7 @@ urlpatterns = [
     path("500/", response_500),
 ]
 
-
+@tag("unit_test")
 @override_settings(ROOT_URLCONF=__name__, DEBUG=False)
 class TestErrorPage(TestCase):
     def test_404_error(self):
