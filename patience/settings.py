@@ -118,6 +118,9 @@ STATIC_URL = "static/"
 # Media served from MEDIA_ROOT
 MEDIA_URL = "media/"
 
+# Static file directory
+STATICFILES_DIRS = env.list("STATICFILES_DIRS", default=[])
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
