@@ -1,7 +1,7 @@
 [project]
 name = "patience"
 version = "0.1.0"
-description = "Add your description here"
+description = "patience is a web app for health care professionals."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -13,4 +13,4 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["ruff", "pre-commit"]
+dev = ["ruff", "pre-commit", "ansible>=11.5.0"]

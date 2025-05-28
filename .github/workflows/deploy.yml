@@ -1,0 +1,35 @@
+name: 🥼 patience cd 🩺
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: set up uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: 🐍 set up python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+
+      - name: 📦 install dependencies
+        run: |
+          uv sync --group dev
+
+      - name: 🔑 set up keys
+        run: |
+          mkdir ~/.ssh/
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/github_to_vps
+          chmod 600 ~/.ssh/github_to_vps
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+          echo -e "Host vps\n  HostName ${{ secrets.SERVER_IP }}\n  User ${{ secrets.DEPLOY_USER }}\n  IdentityFile ~/.ssh/github_to_vps\n  StrictHostKeyChecking no" >> ~/.ssh/config
+          ssh -T vps
+
+      - name: 🃏 run playbook
+        run: |
+          ansible-playbook -i inventories/github.ini site.yml
+        working-directory: ansible/
