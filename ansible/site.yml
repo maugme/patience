@@ -1,0 +1,31 @@
+- hosts: production
+
+  tasks:
+    - name: Vérifie la connexion SSH
+      ansible.builtin.ping:
+
+    - name: Récupère la dernière version du dépôt
+      ansible.builtin.git:
+        repo: "git@github.com:maugme/patience.git"
+        dest: "{{ project_path }}"
+        version: prod
+        force: yes
+        update: yes
+
+    - name: Active l’environnement Python et installe les dépendances
+      ansible.builtin.shell: |
+        source ~/.profile
+        uv sync
+        source .venv/bin/activate
+        uv run manage.py migrate
+        uv run manage.py collectstatic --no-input
+      args:
+        chdir: "{{ project_path }}"
+        executable: /bin/bash
+
+    - name: Redémarre gunicorn
+      become: true
+      ansible.builtin.systemd_service:
+        name: gunicorn_patience
+        state: restarted
+        daemon_reload: yes
