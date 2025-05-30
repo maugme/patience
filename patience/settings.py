@@ -119,6 +119,8 @@ STATIC_URL = "static/"
 MEDIA_URL = "media/"
 
 # Static file directory
+STATIC_ROOT = BASE_DIR / "static"
+
 STATICFILES_DIRS = env.list("STATICFILES_DIRS", default=[])
 
 # Default primary key field type
