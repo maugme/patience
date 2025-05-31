@@ -1,5 +1,5 @@
 {% extends "base.html" %}
 {% block main %}
-    <h1>Bonjour, {{  user.name|default_if_none:"doc" }} !</h1>
+    <h1>Bonjour, {{  user.name|default:"doc" }} !</h1>
     <p>Bienvenue sur Patience</p>
 {% endblock %}
