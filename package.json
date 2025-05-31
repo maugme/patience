@@ -1,0 +1,36 @@
+{
+  "name": "patience",
+  "version": "0.0.1",
+  "description": "Patience is a web application designed to help healthcare professionals manage their patients and consultations on a daily basis.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "",
+    "build-bulma": "sass --load-path=node_modules static/scss/patience.scss static/css/patience.css",
+    "start": "npm run build-bulma -- --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maugme/patience.git"
+  },
+  "keywords": [
+    "patient",
+    "medical",
+    "diary",
+    "calendar",
+    "consultations",
+    "management"
+  ],
+  "author": "mau",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maugme/patience/issues"
+  },
+  "homepage": "https://github.com/maugme/patience#readme",
+  "dependencies": {
+    "bulma": "^1.0.4",
+    "sass": "^1.89.1"
+  }
+}
