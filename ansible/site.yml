@@ -1,10 +1,19 @@
 - hosts: production
 
   tasks:
-    - name: Vérifie la connexion SSH
+    - name: check ssh connection
       ansible.builtin.ping:
 
-    - name: Récupère la dernière version du dépôt
+    - name: clean local repo
+      ansible.builtin.shell: |
+        git reset --hard
+        git clean -fd
+      args:
+        chdir: "{{ project_path }}"
+        executable: /bin/bash
+
+
+    - name: retrieve last version of repository
       ansible.builtin.git:
         repo: "git@github.com:maugme/patience.git"
         dest: "{{ project_path }}"
@@ -12,7 +21,7 @@
         force: yes
         update: yes
 
-    - name: Active l’environnement Python et installe les dépendances
+    - name: activate python environment and install dependencies
       ansible.builtin.shell: |
         source ~/.profile
         uv sync
@@ -23,7 +32,7 @@
         chdir: "{{ project_path }}"
         executable: /bin/bash
 
-    - name: Redémarre gunicorn
+    - name: restart gunicorn
       become: true
       ansible.builtin.systemd_service:
         name: gunicorn_patience
