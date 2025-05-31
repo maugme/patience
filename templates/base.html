@@ -1,21 +1,13 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="fr">
     <head>
-        <!-- meta data, SEO -->
         <meta charset="UTF-8">
         <meta name="description" content="Patience est une application web qui a pour but d'aider les professionnels de santé dans la gestion de leurs données patients.">
         <meta name="keywords" content="HTML, SEO">
         <meta name="robots" content="index, follow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="author" content="mau">
-
         <title>Patience</title>
-
-        <!-- style -->
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-        <link href="{% static 'css/patience.css' %}" rel="stylesheet"/>
     </head>
     <body>
         <header></header>
@@ -25,8 +17,5 @@
             {% endblock %}
         </main>
         <footer>fait avec passion par mau</footer>
-
-    <!-- scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     </body>
 </html>
