@@ -17,3 +17,6 @@ wheels/
 
 # local packages status
 uv.lock
+
+# front dependencies
+node_modules/
