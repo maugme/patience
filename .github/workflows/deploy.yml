@@ -35,5 +35,6 @@ jobs:
 
       - name: 🃏 run playbook
         run: |
-          ansible-playbook -i inventories/github.ini site.yml
+          ansible -i inventories/github.ini production -m ping -vvv
+          ansible-playbook site.yml
         working-directory: ansible/
