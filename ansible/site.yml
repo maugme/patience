@@ -24,7 +24,7 @@
     - name: activate python environment and install dependencies
       ansible.builtin.shell: |
         source ~/.profile
-        uv sync
+        uv sync --no-dev
         source .venv/bin/activate
         uv run manage.py migrate
         uv run manage.py collectstatic --no-input
