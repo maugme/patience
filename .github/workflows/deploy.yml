@@ -37,5 +37,5 @@ jobs:
         run: |
           ansible -i inventories/github.ini production -m ping -vvv
           echo ">>> successful connection"
-          ansible-playbook site.yml -vvv
+          ansible-playbook -i inventories/github.ini site.yml -vvv
         working-directory: ansible/
