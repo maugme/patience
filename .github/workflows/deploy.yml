@@ -31,7 +31,6 @@ jobs:
           chmod 600 ~/.ssh/github_to_vps
           ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
           echo -e "Host vps\n  HostName ${{ secrets.SERVER_IP }}\n  User ${{ secrets.DEPLOY_USER }}\n  IdentityFile ~/.ssh/github_to_vps\n  StrictHostKeyChecking no" >> ~/.ssh/config
-          ls ~/.ssh/*
           ssh -T vps
 
       - name: 🃏 run playbook
