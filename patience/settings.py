@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
+    "django.contrib.redirects",
     "apps.users",
     "apps.core",
 ]
@@ -49,6 +51,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
 ]
 
 ROOT_URLCONF = "patience.urls"
@@ -111,6 +114,11 @@ USE_I18N = True
 USE_TZ = True
 
 
+LOGIN_REDIRECT_URL = "/dashboard/"
+
+LOGOUT_REDIRECT_URL = "/"
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
@@ -128,3 +136,7 @@ STATICFILES_DIRS = env.list("STATICFILES_DIRS", default=[])
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Site settings
+SITE_ID = 1

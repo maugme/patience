@@ -1,5 +1,18 @@
 {% extends "base.html" %}
+
+{% block header %}
+    <h1>Patience</h1>
+{% endblock %}
+
 {% block main %}
-    <h1>Bonjour, {{  user.name|default:"doc" }} !</h1>
-    <p>Bienvenue sur Patience</p>
+    <section>
+        <h2>Pannifiez, vérifiez, et c'est tout.</h2>
+        <p>Professionnels et patients connectés, process simplifiés.</p>
+        {% if request.user %}
+            <a href="{% url 'core:dashboard' %}">Accéder à votre compte</a>
+        {% else %}
+            <a href="{% url 'users:doctor-signup' %}">je suis un professionnel curieux</a>
+            <a href="{% url 'users:doctor-signup' %}">je suis un patient volontaire</a>
+        {% endif %}
+    </section>
 {% endblock %}

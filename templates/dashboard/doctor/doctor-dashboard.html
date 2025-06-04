@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+    <form id="language">
+        <ul>
+            <li>fr</li>
+            <li>en</li>
+            <li>kre</li>
+            <li>vn</li>
+        </ul>
+    </form>
+    <form id="account" method="POST" action="{% url 'users:logout' %}">
+        {% csrf_token %}
+        <button type="submit">log out</button>
+    </form>
+{% endblock %}
+
+{% block main %}
+    <h1>
+        {% if 4 <= time and time < 11  %}bonjour{% elif 11 <= time and time < 14  %}bon appétit{% elif 14 <= time and time < 18 %}bon après-midi{% else %}bonsoir{% endif %}, dr {{ doctor.get_short_name }} !
+    </h1>
+    <section>
+        <h2>consultations</h2>
+        <div>
+            <ul>
+                {% for consultation in doctor.consultations %}
+                    <li>{{ consultation }}</li>
+                {% empty %}
+                    <li>pas de consultation</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h2>patients</h2>
+        <a href="{% url 'users:add-patient' %}">add</a>
+        <div>
+            <ul>
+                {% for patient in doctor.patients.all %}
+                    <li>{{ patient }}</li>
+                {% empty %}
+                    <li>pas de patients</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+{% endblock %}

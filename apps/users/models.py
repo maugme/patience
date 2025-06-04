@@ -55,6 +55,7 @@ class DoctorProfile(Profile):
         return f"Dr {self.get_full_name()}"
 
 
+
 class PatientProfile(Profile):
     address = models.CharField(max_length=200)
     birth_date = models.DateField()

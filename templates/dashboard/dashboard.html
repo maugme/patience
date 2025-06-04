@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+    <form id="language">
+        <ul>
+            <li>fr</li>
+            <li>en</li>
+            <li>kre</li>
+            <li>vn</li>
+        </ul>
+    </form>
+    <form id="account" method="POST" action="{% url 'users:logout' %}">
+        {% csrf_token %}
+        <button type="submit">log out</button>
+    </form>
+{% endblock %}

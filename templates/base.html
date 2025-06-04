@@ -18,7 +18,7 @@
         <link href="{% static 'css/patience.css' %}" rel="stylesheet"/>
     </head>
     <body>
-        <header></header>
+        <header>{% block header %}{% endblock %}</header>
         <main>
             {% block main %}
                 <p>Bonjour, bienvenue sur la page de base de Patience</p>
