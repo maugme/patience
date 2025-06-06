@@ -1,16 +1,17 @@
-from django.contrib.auth.views import (
-    LoginView,
-    LogoutView,
-    PasswordResetView,
-    PasswordResetConfirmView,
-    PasswordResetCompleteView,
-    PasswordResetDoneView,
-)
 from django.urls import path, reverse_lazy
 
 from apps.users.views import (
     SignupDoctorView,
     CreatePatientView,
+    PatientPasswordInitConfirmView,
+    PatientPasswordInitCompleteView,
+    PatientPasswordInitDoneView,
+    UserLoginView,
+    UserLogoutView,
+    UserPasswordResetView,
+    UserPasswordResetCompleteView,
+    UserPasswordResetConfirmView,
+    UserPasswordResetDoneView,
 )
 
 app_name = "users"
@@ -22,65 +23,46 @@ urlpatterns = [
     path("patient/create/", CreatePatientView.as_view(), name="create-patient"),
     path(
         "patient/password/init/confirm/<str:uidb64>/<str:token>/",
-        PasswordResetConfirmView.as_view(
-            template_name="users/patient/init-password-confirm.html",
-            success_url=reverse_lazy("users:reset-password-complete"),
-        ),
-        name="init-password-confirm",
+        PatientPasswordInitConfirmView.as_view(),
+        name="password-init-confirm",
     ),
     path(
         "password/init/complete/",
-        PasswordResetCompleteView.as_view(
-            template_name="users/patient/init-password-complete.html"
-        ),
-        name="init-password-complete",
+        PatientPasswordInitCompleteView.as_view(),
+        name="password-init-complete",
     ),
     path(
         "password/init/done/",
-        PasswordResetDoneView.as_view(
-            template_name="users/patient/init-password-done.html"
-        ),
-        name="init-password-done",
+        PatientPasswordInitDoneView.as_view(),
+        name="password-init-done",
     ),
     # all user auth management
     path(
-        "login/", LoginView.as_view(template_name="users/all/login.html"), name="login"
+        "login/", UserLoginView.as_view(), name="login"
     ),
     path(
         "logout/",
-        LogoutView.as_view(template_name="users/all/logout.html"),
+        UserLogoutView.as_view(),
         name="logout",
     ),
     path(
         "password/reset/",
-        PasswordResetView.as_view(
-            template_name="users/all/reset-password.html",
-            email_template_name="users/email/reset-password-email.html",
-            subject_template_name="users/email/reset-password-subject.txt",
-            success_url=reverse_lazy("users:reset-password-done"),
-        ),
-        name="reset-password",
+        UserPasswordResetView.as_view(),
+        name="password-reset",
     ),
     path(
         "password/reset/done/",
-        PasswordResetDoneView.as_view(
-            template_name="users/all/reset-password-done.html"
-        ),
-        name="reset-password-done",
+        UserPasswordResetDoneView.as_view(),
+        name="password-reset-done",
     ),
     path(
         "password/reset/confirm/<str:uidb64>/<str:token>/",
-        PasswordResetConfirmView.as_view(
-            template_name="users/all/reset-password-confirm.html",
-            success_url=reverse_lazy("users:reset-password-complete"),
-        ),
-        name="reset-password-confirm",
+        UserPasswordResetConfirmView.as_view(),
+        name="password-reset-confirm",
     ),
     path(
         "password/reset/complete/",
-        PasswordResetCompleteView.as_view(
-            template_name="users/all/reset-password-complete.html"
-        ),
-        name="reset-password-complete",
+        UserPasswordResetCompleteView.as_view(),
+        name="password-reset-complete",
     ),
 ]

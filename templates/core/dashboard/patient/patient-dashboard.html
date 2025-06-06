@@ -4,8 +4,8 @@
 {% block main %}
     <h1>
         {% if 4 <= time and time < 11 %}bonjour{% elif 11 <= time and time < 14 %}bon
-            appétit{% elif 14 <= time and time < 18 %}bon après-midi{% else %}bonsoir{% endif %}
-        , {{ patient.get_short_name }} !
+            appétit{% elif 14 <= time and time < 18 %}bon après-midi{% else %}bonsoir{% endif %},
+        {{ patient.get_short_name }} !
     </h1>
     <section>
         <h2>mes professionnels</h2>

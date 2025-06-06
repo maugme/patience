@@ -7,7 +7,7 @@
         {{ form.as_p }}
         <input type="submit" value="se connecter">
 
-        <a href="{% url 'users:reset-password' %}"><span>mot de passe oublié ?</span></a>
+        <a href="{% url 'users:password-reset' %}"><span>mot de passe oublié ?</span></a>
         <a href="{% url 'users:create-doctor' %}"><span>pas de compte ?</span></a>
     </form>
 {% endblock %}
