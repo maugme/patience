@@ -1,16 +1,18 @@
-{% extends 'dashboard/dashboard.html' %}
+{% extends 'core/dashboard/dashboard.html' %}
 {% load static %}
 
 {% block main %}
     <h1>
-        {% if 4 <= time and time < 11  %}bonjour{% elif 11 <= time and time < 14  %}bon appétit{% elif 14 <= time and time < 18 %}bon après-midi{% else %}bonsoir{% endif %}, {{ doctor.get_short_name }} !
+        {% if 4 <= time and time < 11 %}bonjour{% elif 11 <= time and time < 14 %}bon
+            appétit{% elif 14 <= time and time < 18 %}bon après-midi{% else %}bonsoir{% endif %}
+        , {{ patient.get_short_name }} !
     </h1>
     <section>
         <h2>mes professionnels</h2>
         <div class="grid">
             <ul>
                 {% for doctor in patient.doctors.all %}
-                    <li>Dr. {{ doctor.get_fullname }}</li>
+                    <li>{{ doctor }}</li>
                 {% empty %}
                     <li>pas de professionnels</li>
                 {% endfor %}

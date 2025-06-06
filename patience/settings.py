@@ -28,6 +28,12 @@ DEBUG = env.bool("DEBUG", default=False)
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
 
 
+# Email backend config
+EMAIL_BACKEND = env(
+    "EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend"
+)
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -114,6 +120,7 @@ USE_I18N = True
 USE_TZ = True
 
 
+LOGIN_URL = "/users/login/"
 LOGIN_REDIRECT_URL = "/dashboard/"
 
 LOGOUT_REDIRECT_URL = "/"

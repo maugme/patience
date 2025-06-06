@@ -52,7 +52,7 @@ class DoctorProfile(Profile):
     patients = models.ManyToManyField('PatientProfile', related_name='doctors')
 
     def __str__(self) -> str:
-        return f"Dr {self.get_full_name()}"
+        return f"dr {self.get_full_name()}"
 
 
 

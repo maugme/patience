@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>patience mail</title>
+    </head>
+    <body>
+        <header>
+            {% block header %}
+            {% endblock %}
+        </header>
+        <main>
+            {% block user %}
+                <h2>{{ user }},</h2>
+            {% endblock %}
+
+            {% block content %}
+            {% endblock %}
+
+            {% block footer %}
+                <p>
+                    si vous avez reçu ce mail par erreur, vous pouvez l'ignorer. autrement, vous
+                    risquez de lourdes
+                    peines pénales (on vous surveille ...).
+                </p>
+                <p>à bientôt sur patience</p>
+                <p>l'équipe des ange-gardiens patience</p>
+            {% endblock %}
+        </main>
+    </body>
+</html>

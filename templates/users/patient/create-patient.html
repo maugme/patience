@@ -2,9 +2,9 @@
 
 {% block main %}
     <h2>add a new patient</h2>
-    <form method="post" action="{% url 'users:add-patient' %}">
+    <form method="post" action="{% url 'users:create-patient' %}">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="add">
+        <input type="submit" value="ajouter">
     </form>
 {% endblock %}

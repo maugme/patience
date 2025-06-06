@@ -1,0 +1,33 @@
+{% extends 'core/dashboard/dashboard.html' %}
+{% load static %}
+
+{% block main %}
+    <h1>
+        {% if 4 <= time and time < 11  %}bonjour{% elif 11 <= time and time < 14  %}bon appétit{% elif 14 <= time and time < 18 %}bon après-midi{% else %}bonsoir{% endif %}, dr {{ doctor.get_short_name }} !
+    </h1>
+    <section>
+        <h2>mes patients</h2>
+        <a href="{% url 'users:create-patient' %}">add</a>
+        <div>
+            <ul>
+                {% for patient in doctor.patients.all %}
+                    <li>{{ patient }}</li>
+                {% empty %}
+                    <li>pas de patients</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+    <section>
+        <h2>mes consultations</h2>
+        <div>
+            <ul>
+                {% for consultation in doctor.consultations %}
+                    <li>{{ consultation }}</li>
+                {% empty %}
+                    <li>pas de consultation</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+{% endblock %}
