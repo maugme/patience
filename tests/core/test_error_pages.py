@@ -42,7 +42,11 @@ class TestErrorPage(TestCase):
     def test_403_error(self):
         response = self.client.get("/403/")
         self.assertTemplateUsed(response, template_name="403.html")
-        self.assertContains(response, "Vous n'avez pas la permission d'accéder à ou de modifier cette ressource.", status_code=403)
+        self.assertContains(
+            response,
+            "Vous n'avez pas la permission d'accéder à cette ressource ou de la modifier.",
+            status_code=403,
+        )
 
 
     def test_400_error(self):

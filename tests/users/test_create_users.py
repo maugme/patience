@@ -21,7 +21,7 @@ class TestCreateUser(TestCase):
         self.assertTrue(doctor.get_role())
         self.assertEqual(doctor.user.role, "doctor")
 
-        self.assertIn("Dr", str(doctor))
+        self.assertIn("dr", str(doctor))
 
         self.assertTrue(doctor.get_username())
 
@@ -50,7 +50,7 @@ class TestCreateUser(TestCase):
         self.assertTrue(patient.get_role())
         self.assertEqual(patient.user.role, "patient")
 
-        self.assertNotIn("Dr", str(patient))
+        self.assertNotIn("dr", str(patient))
 
         self.assertTrue(patient.get_username())
 
