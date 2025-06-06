@@ -23,7 +23,7 @@ urlpatterns = [
     path(
         "patient/password/init/confirm/<str:uidb64>/<str:token>/",
         PasswordResetConfirmView.as_view(
-            template_name="users/patient/init-password-confirm-view.html",
+            template_name="users/patient/init-password-confirm.html",
             success_url=reverse_lazy("users:reset-password-complete"),
         ),
         name="init-password-confirm",
@@ -38,7 +38,7 @@ urlpatterns = [
     path(
         "password/init/done/",
         PasswordResetDoneView.as_view(
-            template_name="users/patient/init-password-done-view.html"
+            template_name="users/patient/init-password-done.html"
         ),
         name="init-password-done",
     ),
@@ -64,14 +64,14 @@ urlpatterns = [
     path(
         "password/reset/done/",
         PasswordResetDoneView.as_view(
-            template_name="users/all/reset-password-done-view.html"
+            template_name="users/all/reset-password-done.html"
         ),
         name="reset-password-done",
     ),
     path(
         "password/reset/confirm/<str:uidb64>/<str:token>/",
         PasswordResetConfirmView.as_view(
-            template_name="users/all/reset-password-confirm-view.html",
+            template_name="users/all/reset-password-confirm.html",
             success_url=reverse_lazy("users:reset-password-complete"),
         ),
         name="reset-password-confirm",
