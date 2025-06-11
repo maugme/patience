@@ -1,11 +1,12 @@
 import datetime
 
 from django.test import TestCase, tag
+
 from apps.users.models import User, DoctorProfile, PatientProfile
 
 
 @tag("unit_test")
-class TestCreateUser(TestCase):
+class TestProfileModel(TestCase):
     def test_create_doctor_profile(self):
         doctor_user = User.objects.create(
             username="doctor",
@@ -20,16 +21,15 @@ class TestCreateUser(TestCase):
 
         self.assertTrue(doctor.get_role())
         self.assertEqual(doctor.user.role, "doctor")
+        self.assertEqual(f"dr {doctor.get_full_name()}", str(doctor))
 
-        self.assertIn("dr", str(doctor))
-
-        self.assertTrue(doctor.get_username())
-
-        self.assertTrue(doctor.get_email())
-
-        self.assertTrue(doctor.get_full_name())
-
-        self.assertTrue(doctor.get_short_name())
+        self.assertTrue(hasattr(doctor_user, "doctorprofile"))
+        self.assertEqual(doctor.get_username(), doctor.user.username)
+        self.assertEqual(doctor.get_email(), doctor.user.email)
+        self.assertEqual(
+            doctor.get_full_name(), doctor.user.first_name + " " + doctor.user.last_name
+        )
+        self.assertEqual(doctor.get_short_name(), doctor.user.first_name)
 
     def test_create_patient_profile(self):
         patient_user = User.objects.create(
@@ -44,18 +44,18 @@ class TestCreateUser(TestCase):
         patient = PatientProfile.objects.create(
             user=patient_user,
             address="16 Rue du Paraclet 77160 Provins",
-            birth_date=datetime.datetime(year=1995, month=2, day=18)
+            birth_date=datetime.datetime(year=1995, month=2, day=18),
         )
 
         self.assertTrue(patient.get_role())
         self.assertEqual(patient.user.role, "patient")
+        self.assertEqual(patient.get_full_name(), str(patient))
 
-        self.assertNotIn("dr", str(patient))
-
-        self.assertTrue(patient.get_username())
-
-        self.assertTrue(patient.get_email())
-
-        self.assertTrue(patient.get_full_name())
-
-        self.assertTrue(patient.get_short_name())
+        self.assertTrue(hasattr(patient_user, "patientprofile"))
+        self.assertEqual(patient.get_username(), patient.user.username)
+        self.assertEqual(patient.get_email(), patient.user.email)
+        self.assertEqual(
+            patient.get_full_name(),
+            patient.user.first_name + " " + patient.user.last_name,
+        )
+        self.assertEqual(patient.get_short_name(), patient.user.first_name)

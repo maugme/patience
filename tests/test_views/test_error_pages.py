@@ -1,9 +1,7 @@
-from django.contrib.admindocs.views import ViewDetailView
 from django.core.exceptions import PermissionDenied, SuspiciousOperation, ImproperlyConfigured
 from django.http import Http404
 from django.test import TestCase, Client, override_settings, tag
 from django.urls import path
-from django.views import defaults
 
 def response_400(request):
     raise SuspiciousOperation
@@ -38,7 +36,6 @@ class TestErrorPage(TestCase):
             self.assertTemplateUsed(response, template_name="500.html")
             self.assertContains(response, "Problème côté serveur. Réessayer plus tard.")
 
-
     def test_403_error(self):
         response = self.client.get("/403/")
         self.assertTemplateUsed(response, template_name="403.html")
@@ -47,7 +44,6 @@ class TestErrorPage(TestCase):
             "Vous n'avez pas la permission d'accéder à cette ressource ou de la modifier.",
             status_code=403,
         )
-
 
     def test_400_error(self):
         response = self.client.get("/400/")

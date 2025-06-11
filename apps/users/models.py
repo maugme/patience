@@ -1,5 +1,4 @@
-from django.contrib.auth.base_user import BaseUserManager
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group
 from django.db import models
 
 
@@ -24,6 +23,17 @@ class User(AbstractUser):
     )
 
     role = models.CharField(max_length=20, choices=RoleChoices, default='patient')
+
+    def save(self, **kwargs):
+        super().save(**kwargs)
+        if self.role == 'patient':
+            patient_group, _ = Group.objects.get_or_create(name="patients")
+            self.groups.add(patient_group)
+        elif self.role == 'doctor':
+            doctor_group, _ = Group.objects.get_or_create(name="doctors")
+            self.groups.add(doctor_group)
+        else:
+            raise NotImplementedError('Role must be patient or doctor')
 
 
 class Profile(models.Model):
@@ -53,7 +63,6 @@ class DoctorProfile(Profile):
 
     def __str__(self) -> str:
         return f"dr {self.get_full_name()}"
-
 
 
 class PatientProfile(Profile):

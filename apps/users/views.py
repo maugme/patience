@@ -1,5 +1,9 @@
 from django.conf import settings
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin,
+    PermissionRequiredMixin,
+    UserPassesTestMixin,
+)
 from django.contrib.auth.views import (
     LoginView,
     LogoutView,
@@ -10,6 +14,7 @@ from django.contrib.auth.views import (
 )
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
+from django.http import Http404, HttpRequest
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.http import urlsafe_base64_encode
@@ -27,10 +32,12 @@ class SignupDoctorView(CreateView):
     success_url = reverse_lazy('users:login')
 
 
-class CreatePatientView(LoginRequiredMixin, CreateView):
+class CreatePatientView(PermissionRequiredMixin, CreateView):
     form_class = CreatePatientForm
     template_name = "users/patient/create-patient.html"
-    success_url = reverse_lazy("users:password-init-done")
+    success_url = reverse_lazy("core:dashboard")
+    permission_required = ["users.add_patientprofile"]
+    raise_exception = True
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -59,16 +66,24 @@ class CreatePatientView(LoginRequiredMixin, CreateView):
         return response
 
 
-class PatientPasswordInitConfirmView(PasswordResetConfirmView):
+# password management views
+class UserShouldNotBeLoggedIn(UserPassesTestMixin):
+    request: HttpRequest
+
+    def test_func(self):
+        return not self.request.user.is_authenticated  # will always be used by followed views
+
+
+class PatientPasswordInitConfirmView(UserShouldNotBeLoggedIn, PasswordResetConfirmView):
     template_name = "users/patient/password-init-confirm.html"
     success_url = reverse_lazy("users:password-reset-complete")
 
 
-class PatientPasswordInitCompleteView(PasswordResetCompleteView):
+class PatientPasswordInitCompleteView(UserShouldNotBeLoggedIn, PasswordResetCompleteView):
     template_name="users/patient/password-init-complete.html"
 
 
-class PatientPasswordInitDoneView(PasswordResetCompleteView):
+class PatientPasswordInitDoneView(UserShouldNotBeLoggedIn, PasswordResetDoneView):
     template_name="users/patient/password-init-done.html"
 
 
@@ -80,21 +95,21 @@ class UserLogoutView(LogoutView):
     template_name="users/common/logout.html"
 
 
-class UserPasswordResetView(PasswordResetView):
+class UserPasswordResetView(UserShouldNotBeLoggedIn, PasswordResetView):
     template_name = "users/common/password-reset.html"
     email_template_name = "users/email/password-reset-email.html"
     subject_template_name = "users/email/password-reset-subject.txt"
     success_url = reverse_lazy("users:password-reset-done")
 
 
-class UserPasswordResetDoneView(PasswordResetDoneView):
+class UserPasswordResetDoneView(UserShouldNotBeLoggedIn, PasswordResetDoneView):
     template_name="users/common/password-reset-done.html"
 
 
-class UserPasswordResetConfirmView(PasswordResetConfirmView):
+class UserPasswordResetConfirmView(UserShouldNotBeLoggedIn, PasswordResetConfirmView):
     template_name = "users/common/password-reset-confirm.html"
     success_url = reverse_lazy("users:password-reset-complete")
 
 
-class UserPasswordResetCompleteView(PasswordResetCompleteView):
+class UserPasswordResetCompleteView(UserShouldNotBeLoggedIn, PasswordResetCompleteView):
     template_name = "users/common/password-reset-complete.html"

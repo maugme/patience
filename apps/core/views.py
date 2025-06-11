@@ -11,6 +11,7 @@ class IndexView(TemplateView):
 
 class DashboardView(LoginRequiredMixin, TemplateView):
     login_url = "/users/login/"
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = User.objects.get(id=self.request.user.id)

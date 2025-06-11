@@ -27,19 +27,17 @@ urlpatterns = [
         name="password-init-confirm",
     ),
     path(
-        "password/init/complete/",
+        "patient/password/init/complete/",
         PatientPasswordInitCompleteView.as_view(),
         name="password-init-complete",
     ),
     path(
-        "password/init/done/",
+        "patient/password/init/done/",
         PatientPasswordInitDoneView.as_view(),
         name="password-init-done",
     ),
     # all user auth management
-    path(
-        "login/", UserLoginView.as_view(), name="login"
-    ),
+    path("login/", UserLoginView.as_view(), name="login"),
     path(
         "logout/",
         UserLogoutView.as_view(),
